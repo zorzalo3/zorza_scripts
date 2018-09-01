@@ -1,0 +1,12 @@
+Skopiować folder do projektu (czyli będzie obok m.in. zorza i timetable)
+Kiedyś można pomyśleć nad git subtree?
+
+Kolejność:
+./import.py
+./merge_groups.py # Łączy grupy z planu o tej samej nazwie w jedną (językowe)
+./split_groups.py # Oddziela BO od całych klas
+./cleanup_groups.py # Usuwa grupy bez lekcji
+./rename_subjects # Zmienia nazwy przedmiotów na bardziej stosowne do wyświetlania
+
+Dla czystej bazy danych wykonać także
+./add_shortened_periods.py
