@@ -1,12 +1,14 @@
-Skopiować folder do projektu (czyli będzie obok m.in. zorza i timetable)
-Kiedyś można pomyśleć nad git subtree?
+Skrypty do importowania planu lekcji pochodzącego z Librusa/aSc Plan Lekcji na zorzę
+
+Ten folder musi być w folderze projektu (czyli będzie obok m.in. zorza i timetable).
 
 Kolejność:
 ./import.py
 ./merge_groups.py # Łączy grupy z planu o tej samej nazwie w jedną (językowe)
 ./split_groups.py # Oddziela BO od całych klas
+./create_groups.py # Opcjonalne - łączy np. grupy z BO w tym samym czasie w jedną
 ./cleanup_groups.py # Usuwa grupy bez lekcji
 ./rename_subjects # Zmienia nazwy przedmiotów na bardziej stosowne do wyświetlania
 
-Dla czystej bazy danych wykonać także
+Dla czystej bazy danych wykonać także jednorazowo
 ./add_shortened_periods.py
