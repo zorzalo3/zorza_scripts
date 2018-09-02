@@ -108,6 +108,8 @@ unspecific = [
     'Cała klasa', 'bez religii'
 ]
 
+classes_by_group = dict()
+groups = []
 Group.objects.all().delete()
 for g in root.find('groups'):
     a = g.attrib
@@ -115,9 +117,18 @@ for g in root.find('groups'):
     obj.name = a['name']
     if obj.name in unspecific:
         obj.name = class_names[int(Id(g, 'classid'))] + ' ' + obj.name
-    obj.save()
+    groups.append(obj)
     # bulk_create nie dziala z ManyToMany więc to najwolniejsza część skryptu
-    obj.classes.add(Id(g, 'classid'))
+    gid = int(Id(g))
+    classid = int(Id(g, 'classid'))
+    if classes_by_group.get(gid) == None:
+        classes_by_group[gid] = [classid]
+    else:
+        classes_by_group[gid].append(classid)
+
+Group.objects.bulk_create(groups)
+for key, val in classes_by_group.items():
+    Group.objects.get(pk=key).classes.set(val)
 
 since()
 
