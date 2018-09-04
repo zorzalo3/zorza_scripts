@@ -36,7 +36,7 @@ except:
 def Id(obj, name='id'):
     return obj.attrib[name].strip('*') #jakas dziwna gwiazdka jest w tym xmlu
 
-Period.objects.all().delete()
+schedule.period_set.all().delete()
 for p in root.find('periods'):
     a = p.attrib
     obj = Period(number=int(a['period']), begin_time=a['starttime'], \
