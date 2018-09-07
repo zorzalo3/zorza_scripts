@@ -6,7 +6,7 @@ Kolejność:
 ./import.py
 ./merge_groups.py # Łączy grupy z planu o tej samej nazwie w jedną (językowe)
 ./split_groups.py # Oddziela BO od całych klas
-./create_groups.py # Opcjonalne - łączy np. grupy z BO w tym samym czasie w jedną
+./create_groups.py # Łączy np. grupy z BO w tym samym czasie w jedną
 ./cleanup_groups.py # Usuwa grupy bez lekcji
 ./rename_subjects # Zmienia nazwy przedmiotów na bardziej stosowne do wyświetlania
 
