@@ -117,6 +117,8 @@ for g in root.find('groups'):
     obj.name = a['name']
     if obj.name in unspecific:
         obj.name = class_names[int(Id(g, 'classid'))] + ' ' + obj.name
+    if 'Cała klasa' in obj.name:
+        obj.link_to_class = True
     groups.append(obj)
     # bulk_create nie dziala z ManyToMany więc to najwolniejsza część skryptu
     gid = int(Id(g))
