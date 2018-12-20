@@ -16,4 +16,6 @@ Plan przykładowy: ./rename_subjects_sample.py
 Dla czystej bazy danych wykonać także jednorazowo
 ./add_shortened_periods.py
 
+Licencja: MIT
+
 
