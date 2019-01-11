@@ -48,6 +48,9 @@ replaces = {
     'mat_zdw': 'Matematyka',
     'fiz_zdw': 'Fizyka',
     'pol_zdw': 'Polski',
+    'mat_z': 'Matematyka',
+    'fiz_z': 'Fizyka',
+    'pol_z': 'Polski',
 }
 
 from timetable.models import *
