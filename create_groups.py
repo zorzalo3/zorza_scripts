@@ -28,11 +28,8 @@ for lesson in Lesson.objects.all():
             class_ids.append(obj['group__classes'])
             class_names.append(klass)
         new_name = merge_names(class_names)+' '+common
-        try:
-            new = Group.objects.get(name=new_name[:15])
-        except:
-            new = Group(name = new_name[:15])
-            new.save()
+        new, created = Group.objects.get_or_create(name=new_name[:15])
+        if created:
             new.classes.set(class_ids)
         similar.exclude(pk=lesson.pk)
         similar.delete()

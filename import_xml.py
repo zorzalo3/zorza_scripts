@@ -15,11 +15,10 @@ from timetable.models import *
 root = tree.getroot()
 
 # W xmlu nie ma rozroznienia na rozne rozklady czasu
-try:
-    schedule = Schedule.objects.get(pk=1)
-except:
-    schedule = Schedule(name='Normalne lekcje', is_default=True)
-    schedule.save()
+schedule, _ = Schedule.objects.get_or_create(
+    is_default=True,
+    defaults={'name': 'Normalne lekcje'}
+)
 
 def Id(obj, name='id'):
     # Jakaś dziwna gwiazdka jest w tym xmlu

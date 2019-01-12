@@ -49,8 +49,9 @@ replaces = {
 from timetable.models import *
 
 for subject in Subject.objects.all():
-    try:
-        subject.short_name = replaces[subject.short_name]
+    display_name = replaces.get(subject.short_name)
+    if display_name:
+        subject.short_name = display_name
         subject.save()
-    except KeyError:
+    else:
         print("No entry {} in the dictionary".format(subject.short_name))
