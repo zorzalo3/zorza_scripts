@@ -27,5 +27,6 @@ for l in lessons:
     new_group = Group(name=new_name)
     new_group.save()
     new_group.classes.add(*l.group.classes.all())
-    similar = Lesson.objects.filter(subject=l.subject, teacher=l.teacher, weekday=l.weekday, group=l.group)
+    similar = Lesson.objects.filter(subject=l.subject, teacher=l.teacher,
+                                    weekday=l.weekday, group=l.group)
     similar.update(group=new_group)

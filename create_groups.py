@@ -24,7 +24,6 @@ for lesson in Lesson.objects.all():
         period=lesson.period, weekday=lesson.weekday)
     if similar.count() > 1:
         values = similar.values('id', 'group__name', 'group__classes')
-        print(values[0])
         common = values[0]['group__name'].split(' ', 1)[1]
         class_names = []
         class_ids = []
@@ -32,7 +31,6 @@ for lesson in Lesson.objects.all():
             klass = obj['group__name'][:2]
             class_ids.append(obj['group__classes'])
             class_names.append(klass)
-        #print(classes, common)
         new_name = merge_names(class_names)+' '+common
         try:
             new = Group.objects.get(name=new_name[:15])

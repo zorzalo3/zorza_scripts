@@ -17,7 +17,7 @@ from timetable.models import *
 
 root = tree.getroot()
 
-# na librusie nie ma rozroznienia na rozne rozklady czasu
+# W xmlu nie ma rozroznienia na rozne rozklady czasu
 try:
     schedule = Schedule.objects.get(pk=1)
 except:
@@ -25,7 +25,8 @@ except:
     schedule.save()
 
 def Id(obj, name='id'):
-    return obj.attrib[name].strip('*') #jakas dziwna gwiazdka jest w tym xmlu
+    # Jakaś dziwna gwiazdka jest w tym xmlu
+    return obj.attrib[name].replace('*', '')
 
 schedule.period_set.all().delete()
 for p in root.find('periods'):
@@ -44,7 +45,8 @@ for t in root.find('teachers'):
     initials = a['short']
     if len(initials) > 2:
         initials = '??'
-    obj = Teacher(pk=Id(t), first_name=name[0], last_name=name[1], initials=initials)
+    obj = Teacher(pk=Id(t), first_name=name[0],
+                  last_name=name[1], initials=initials)
     obj.clean()
     obj.full_clean()
     obj.save()
@@ -54,13 +56,11 @@ Subject.objects.all().delete()
 for s in root.find('subjects'):
     a = s.attrib
     obj = Subject(pk=Id(s), name=a['name'], short_name=a['short'])
-    obj.clean()
-    try:
-        obj.full_clean()
-    except:
-        obj.name=obj.name[:Subject._meta.get_field('name').max_length]
-        obj.short_name=obj.short_name[:Subject._meta.get_field('short_name').max_length]
-        obj.full_clean()
+    name_max_len = Subject._meta.get_field('name').max_length
+    obj.name = obj.name[:name_max_len]
+    short_name_max_len = Subject._meta.get_field('short_name').max_length
+    obj.short_name = obj.short_name[:short_name_max_len]
+    obj.full_clean()
     obj.save()
 
 
@@ -68,13 +68,11 @@ Room.objects.all().delete()
 for r in root.find('classrooms'):
     a = r.attrib
     obj = Room(pk=Id(r), name=a['name'], short_name=a['short'])
-    obj.clean()
-    try:
-        obj.full_clean()
-    except:
-        obj.name=obj.name[:Room._meta.get_field('name').max_length]
-        obj.short_name=obj.short_name[:Room._meta.get_field('short_name').max_length]
-        obj.full_clean()
+    name_max_len = Room._meta.get_field('name').max_length
+    obj.name = obj.name[:name_max_len]
+    short_name_max_len = Room._meta.get_field('short_name').max_length
+    obj.short_name = obj.short_name[:short_name_max_len]
+    obj.full_clean()
     obj.save()
 
 
@@ -121,14 +119,13 @@ GroupClass.objects.bulk_create(groupclass_objs)
 # cos pomiedzy Subject a Lesson?
 
 lessons = [dict() for i in range(len(root.find('lessons'))+1)]
-lessons[0]['a'] = 2
 for l in root.find('lessons'):
     idx = Id(l)
     idx = int(idx)
     lessons[idx]['subject'] = int(Id(l, 'subjectid'))
     # chyba zawsze jest tylko jeden teacherid (nie ma po przecinku)
     lessons[idx]['teacher'] = int(Id(l, 'teacherids'))
-    lessons[idx]['groupids'] = Id(l, 'groupids').replace('*', '').split(',')
+    lessons[idx]['groupids'] = Id(l, 'groupids').split(',')
 
 
 # obiekty Lesson do zapisania w bazie
@@ -142,10 +139,11 @@ for c in root.find('cards'):
     teacher = lessons[needle]['teacher']
     groupids = lessons[needle]['groupids']
     for groupid in groupids:
-        obj = Lesson(group_id=int(groupid), period=int(Id(c, 'period')), room_id=int(Id(c, 'classroomids')))
+        obj = Lesson(group_id=int(groupid), period=int(Id(c, 'period')),
+                     room_id=int(Id(c, 'classroomids')))
         obj.subject_id = subject
         obj.teacher_id = teacher
-        obj.weekday = Id(c,'day')
+        obj.weekday = Id(c, 'day')
         tmp.append(obj)
 
 Lesson.objects.bulk_create(tmp)

@@ -12,16 +12,15 @@ from timetable.models import *
 def group_objects_by_attr(queryset, attr_name):
     all_instances = queryset.order_by(attr_name)
     keyfunc = operator.attrgetter(attr_name)
-    return {k: list(g) for k, g in itertools.groupby(queryset, keyfunc)}
+    return {k: list(g) for k, g in itertools.groupby(all_instances, keyfunc)}
 
 all_groups = Group.objects.all()
-grouped_by_name = group_objects_by_attr(all_groups.order_by('name'), 'name')
+grouped_by_name = group_objects_by_attr(all_groups, 'name')
 
 
 for name, groups in grouped_by_name.items():
     first = groups[0]
     for group in groups[1:]:
         first.classes.add(*group.classes.all())
-        lessons = Lesson.objects.filter(group=group)
-        lessons.delete()
+        Lesson.objects.filter(group=group).delete()
         group.delete()
