@@ -1,9 +1,4 @@
-#!/usr/bin/env python3
-import os, django, sys, itertools, operator
 import calendar
-sys.path.append('..')
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'zorza.settings')
-django.setup()
 
 from timetable.models import *
 

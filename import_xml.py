@@ -1,8 +1,7 @@
-#!/usr/bin/env python3
-import os, django, sys, datetime
+import sys, datetime
 
 if len(sys.argv) != 2:
-    sys.exit("Usage: ./import [file.xml]")
+    sys.exit("Usage: ./run [file.xml]")
 
 filename = sys.argv[1]
 
@@ -10,8 +9,6 @@ import xml.etree.ElementTree as ET
 tree = ET.parse(filename)
 
 sys.path.append('..')
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'zorza.settings')
-django.setup()
 
 from timetable.models import *
 

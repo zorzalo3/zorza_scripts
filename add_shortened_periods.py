@@ -1,15 +1,6 @@
-#!/usr/bin/env python3
-
-import os, django, sys
-sys.path.append('..')
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'zorza.settings')
-django.setup()
-
 from timetable.models import Schedule, Period
 from datetime import time
 
-shortened = Schedule(name='Skrócone lekcje', is_default=False)
-shortened.save()
 
 periods = [
     {
@@ -59,4 +50,7 @@ periods = [
     },
 ]
 
-Period.objects.bulk_create([Period(schedule=shortened, **kwargs) for kwargs in periods])
+if not Schedule.objects.filter(name='Skrócone lekcje').exists():
+    shortened = Schedule(name='Skrócone lekcje', is_default=False)
+    shortened.save()
+    Period.objects.bulk_create([Period(schedule=shortened, **kwargs) for kwargs in periods])

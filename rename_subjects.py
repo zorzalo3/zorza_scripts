@@ -1,10 +1,3 @@
-#!/usr/bin/env python3
-import os, django, sys
-sys.path.append('..')
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'zorza.settings')
-django.setup()
-# użyć po imporcie z xml
-
 replaces = {
     'GDDW': 'GDDW',
     'ang': 'Angielski',
