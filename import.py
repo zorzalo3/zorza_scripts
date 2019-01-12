@@ -108,7 +108,9 @@ unspecific = [
     'Cała klasa', 'bez religii'
 ]
 
-classes_by_group = dict()
+# model for the many to many relationship
+GroupClass = Group.classes.through
+groupclass_objs = []
 groups = []
 Group.objects.all().delete()
 for g in root.find('groups'):
@@ -120,17 +122,12 @@ for g in root.find('groups'):
     if 'Cała klasa' in obj.name:
         obj.link_to_class = True
     groups.append(obj)
-    # bulk_create nie dziala z ManyToMany więc to najwolniejsza część skryptu
     gid = int(Id(g))
     classid = int(Id(g, 'classid'))
-    if classes_by_group.get(gid) == None:
-        classes_by_group[gid] = [classid]
-    else:
-        classes_by_group[gid].append(classid)
+    groupclass_objs.append(GroupClass(group_id=gid, class_id=classid))
 
 Group.objects.bulk_create(groups)
-for key, val in classes_by_group.items():
-    Group.objects.get(pk=key).classes.set(val)
+GroupClass.objects.bulk_create(groupclass_objs)
 
 since()
 
