@@ -17,7 +17,7 @@ root = tree.getroot()
 # W xmlu nie ma rozroznienia na rozne rozklady czasu
 schedule, _ = Schedule.objects.get_or_create(
     is_default=True,
-    defaults={'name': 'Normalne lekcje'}
+    defaults={'name': 'normalne lekcje'}
 )
 
 def Id(obj, name='id'):
