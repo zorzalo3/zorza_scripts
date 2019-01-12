@@ -17,15 +17,6 @@ from timetable.models import *
 
 root = tree.getroot()
 
-sincet = datetime.datetime.now()
-
-def since():
-    """profiling"""
-    global sincet
-    diff = datetime.datetime.now() - sincet
-    print(diff.seconds * 1000000 + diff.microseconds)
-    sincet = datetime.datetime.now()
-
 # na librusie nie ma rozroznienia na rozne rozklady czasu
 try:
     schedule = Schedule.objects.get(pk=1)
@@ -45,7 +36,6 @@ for p in root.find('periods'):
     obj.full_clean()
     obj.save()
 
-since()
 
 Teacher.objects.all().delete()
 for t in root.find('teachers'):
@@ -59,7 +49,6 @@ for t in root.find('teachers'):
     obj.full_clean()
     obj.save()
 
-since()
 
 Subject.objects.all().delete()
 for s in root.find('subjects'):
@@ -74,7 +63,6 @@ for s in root.find('subjects'):
         obj.full_clean()
     obj.save()
 
-since()
 
 Room.objects.all().delete()
 for r in root.find('classrooms'):
@@ -89,7 +77,6 @@ for r in root.find('classrooms'):
         obj.full_clean()
     obj.save()
 
-since()
 
 class_names = dict()
 Class.objects.all().delete()
@@ -100,7 +87,6 @@ for c in root.find('classes'):
     obj.full_clean()
     obj.save()
 
-since()
 
 # W xmlu niektóre nazwy grup nic nie mówią
 unspecific = [
@@ -129,7 +115,6 @@ for g in root.find('groups'):
 Group.objects.bulk_create(groups)
 GroupClass.objects.bulk_create(groupclass_objs)
 
-since()
 
 # w tym xmlu lekcja ma wiele grup, a grupa nie ma wielu klas
 # lekcja u nich to w ogole jakies inne pojecie
@@ -145,7 +130,6 @@ for l in root.find('lessons'):
     lessons[idx]['teacher'] = int(Id(l, 'teacherids'))
     lessons[idx]['groupids'] = Id(l, 'groupids').replace('*', '').split(',')
 
-since()
 
 # obiekty Lesson do zapisania w bazie
 tmp = []
@@ -166,4 +150,3 @@ for c in root.find('cards'):
 
 Lesson.objects.bulk_create(tmp)
 
-since()
