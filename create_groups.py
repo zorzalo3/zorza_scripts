@@ -9,9 +9,12 @@ def merge_names(names):
     """Łączy nazwy klas tak:
         ['1A', '2A', '3A'] => '123A'
         ['2A', '2B'] => '2AB'
+	['1Bg','1Dg'] => '1BgDg'
+	#TODO handle ambigous groups like:
+		['1A','2A','2B'] should give '1A2AB' not '12AB'
     """
     firsts = sorted({name[0] for name in names})
-    seconds = sorted({name[1] for name in names})
+    seconds = sorted({name[1:] for name in names})
     return "".join(firsts+seconds)
 
 
@@ -24,7 +27,7 @@ for lesson in Lesson.objects.all():
         class_names = []
         class_ids = []
         for obj in values:
-            klass = obj['group__name'][:2]
+            klass = obj['group__name'].split(' ')[0]
             class_ids.append(obj['group__classes'])
             class_names.append(klass)
         new_name = merge_names(class_names)+' '+common
