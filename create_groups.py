@@ -33,7 +33,6 @@ for lesson in Lesson.objects.all():
         new, created = Group.objects.get_or_create(name=new_name[:name_cutoff])
         if created:
             new.classes.set(class_ids)
-        similar.exclude(pk=lesson.pk)
         similar.delete()
         lesson.group = new
         lesson.save()
