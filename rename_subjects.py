@@ -26,7 +26,6 @@ replaces = {
     'his_r': 'Historia R',
     'HiS': 'Hist. i społ.',
     'mat': 'Matematyka',
-    'mat': 'Matematyka',
     'mat_d': 'Matematyka D',
     'mat_r': 'Matematyka R',
     'wos': 'WOS',
