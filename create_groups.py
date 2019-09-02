@@ -1,5 +1,3 @@
-import itertools, operator
-
 from timetable.models import *
 
 """Tworzy nową grupę jeśli nauczyciel ma lekcje z kilkoma klasami.
