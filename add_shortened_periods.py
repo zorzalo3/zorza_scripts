@@ -50,6 +50,7 @@ periods = [
     },
 ]
 
-shortened, created = Schedule.objects.get_or_create(name='skrócone lekcje', is_default=False)
-if created:
-    Period.objects.bulk_create([Period(schedule=shortened, **kwargs) for kwargs in periods])
+Schedule.objects.filter(name='skrócone lekcje').delete()
+shortened = Schedule(name='skrócone lekcje', is_default=None)
+shortened.save()
+Period.objects.bulk_create([Period(schedule=shortened, **kwargs) for kwargs in periods])
