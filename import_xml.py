@@ -123,6 +123,10 @@ for l in root.find('lessons'):
     lessons[idx]['teacher'] = int(Id(l, 'teacherids'))
     lessons[idx]['groupids'] = Id(l, 'groupids').split(',')
 
+# Stwórzy salę catch-all
+catchall_room = Room(name="Default", short_name="def")
+catchall_room.save()
+keep_catchall_room = False
 
 # obiekty Lesson do zapisania w bazie
 tmp = []
@@ -135,8 +139,13 @@ for c in root.find('cards'):
     teacher = lessons[needle]['teacher']
     groupids = lessons[needle]['groupids']
     for groupid in groupids:
+        try:
+            room_id = int(Id(c, 'classroomids'))
+        except:
+            keep_catchall_room = True
+            room_id = catchall_room.pk
         obj = Lesson(group_id=int(groupid), period=int(Id(c, 'period')),
-                     room_id=int(Id(c, 'classroomids')))
+                     room_id=room_id)
         obj.subject_id = subject
         obj.teacher_id = teacher
         obj.weekday = Id(c, 'day')
@@ -144,3 +153,5 @@ for c in root.find('cards'):
 
 Lesson.objects.bulk_create(tmp)
 
+if not keep_catchall_room:
+    catchall_room.delete()

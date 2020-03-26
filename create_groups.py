@@ -1,5 +1,3 @@
-import itertools, operator
-
 from timetable.models import *
 
 """Tworzy nową grupę jeśli nauczyciel ma lekcje z kilkoma klasami.
@@ -17,13 +15,14 @@ def merge_names(names):
     seconds = sorted({name[1:] for name in names})
     return "".join(firsts+seconds)
 
+name_cutoff = Group._meta.get_field('name').max_length
 
 for lesson in Lesson.objects.all():
     similar = Lesson.objects.filter(teacher=lesson.teacher, room=lesson.room,
         period=lesson.period, weekday=lesson.weekday)
     if similar.count() > 1:
         values = similar.values('id', 'group__name', 'group__classes')
-        common = values[0]['group__name'].split(' ', 1)[1]
+        common = values[0]['group__name'].replace('/',' ').split(' ', 1)[1]
         class_names = []
         class_ids = []
         for obj in values:
@@ -31,10 +30,9 @@ for lesson in Lesson.objects.all():
             class_ids.append(obj['group__classes'])
             class_names.append(klass)
         new_name = merge_names(class_names)+' '+common
-        new, created = Group.objects.get_or_create(name=new_name[:15])
+        new, created = Group.objects.get_or_create(name=new_name[:name_cutoff])
         if created:
             new.classes.set(class_ids)
-        similar.exclude(pk=lesson.pk)
         similar.delete()
         lesson.group = new
         lesson.save()
