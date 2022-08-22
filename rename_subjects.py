@@ -53,7 +53,7 @@ replaces = {
     'inf_dd': 'Informatyka DD',
     'fiz_dd': 'Fizyka DD',
     'pol_dd': 'Polski DD',
-    'bio_dd': 'Biologia DD', 
+    'biol_dd': 'Biologia DD', 
     'mat_dd': 'Matematyka DD',
     'HiT': 'Historia i Teraźniejszość',
     'muz': 'Muzyka',
