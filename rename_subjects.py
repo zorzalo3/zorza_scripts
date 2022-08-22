@@ -1,4 +1,5 @@
 replaces = {
+    'fil': 'Filozofia',
     'GDDW': 'GDDW',
     'ang': 'Angielski',
     'niem': 'Niemiecki',
@@ -51,6 +52,10 @@ replaces = {
     'mat_w': 'Matematyka W',
     'inf_dd': 'Informatyka DD',
     'fiz_dd': 'Fizyka DD',
+    'pol_dd': 'Polski DD',
+    'bio_dd': 'Biologia DD', 
+    'mat_dd': 'Matematyka DD',
+    'HiT': 'Historia i Teraźniejszość',
     'muz': 'Muzyka',
     'plas': 'Plastyka',
     'chem_dd': 'Chemia DD',
