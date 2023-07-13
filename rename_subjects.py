@@ -55,7 +55,7 @@ replaces = {
     'pol_dd': 'Polski DD',
     'biol_dd': 'Biologia DD', 
     'mat_dd': 'Matematyka DD',
-    'HiT': 'Historia i Teraźniejszość',
+    'HiT': 'HiT',
     'muz': 'Muzyka',
     'plas': 'Plastyka',
     'chem_dd': 'Chemia DD',

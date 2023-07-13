@@ -37,3 +37,4 @@ for lesson in Lesson.objects.all():
         lesson.group = new
         lesson.save()
 
+Group.objects.create(name="Konsultacje", link_to_class=False)
