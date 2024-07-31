@@ -60,6 +60,7 @@ replaces = {
     'plas': 'Plastyka',
     'chem_dd': 'Chemia DD',
     'hc': 'His. cywilizacji'
+    'BiZ': 'Bizn. i Zarz.'
 }
 
 from timetable.models import *
