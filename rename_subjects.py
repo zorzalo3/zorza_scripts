@@ -59,8 +59,10 @@ replaces = {
     'muz': 'Muzyka',
     'plas': 'Plastyka',
     'chem_dd': 'Chemia DD',
-    'hc': 'His. cywilizacji'
-    'BiZ': 'Bizn. i Zarz.'
+    'hc': 'His. cywilizacji',
+    'BiZ': 'Bizn. i Zarz.',
+    'DZ': 'Doradztwo zaw.',
+    'WO': 'Wych. obywatelskie'
 }
 
 from timetable.models import *
